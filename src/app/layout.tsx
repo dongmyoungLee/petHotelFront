@@ -1,5 +1,5 @@
 import type {Metadata} from "next";
-import "./globals.css";
+import "@/app/globals.css";
 
 export const metadata: Metadata = {
     title: "PetHotel | 강아지, 고양이 및 대형견을 위한 프리미엄 예약 서비스",

@@ -2,29 +2,60 @@
 @import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700&family=Noto+Sans+KR:wght@400;500;700&display=swap');
 @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.6/dist/web/static/pretendard.css");
 @import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 * {
-  margin: 0;
-  padding: 0;
   box-sizing: border-box;
 }
 
-html, body {
-  @apply bg-white;
-  font-family: Pretendard, 'Inter', sans-serif;
+/* 전역 폰트 설정 */
+@layer base {
+  html, body {
+    font-family: Pretendard, 'Inter', sans-serif;
+    @apply text-gray-900; /* 기본 글자색 설정 */
+  }
+
+  section {
+    @apply w-full flex justify-center
+  }
 }
 
-/* ✅ 링크 기본 스타일 */
-a {
-  @apply text-blue-500 hover:underline;
+@layer components {
+  .input-primary {
+    @apply w-1/2 max-w-lg min-w-2xs;
+  }
 }
 
-/* ✅ 컨테이너 중앙 정렬 */
-.container {
-  @apply max-w-4xl mx-auto px-4 sm:px-6 lg:px-8;
-}
 
-/* ✅ 버튼 스타일 예시 */
-.btn-primary {
-  @apply bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-blue-700 transition;
+@layer utilities {
+  /* 전역 메인 컬러 설정 */
+  .bg-primary {
+    @apply bg-[#8b74ff];
+  }
+
+  .bg-kakao {
+    @apply bg-[#FEE500];
+  }
+
+  .bg-naver {
+    @apply bg-[#03C75A]
+  }
+
+  .bg-google {
+    @apply bg-auto border-1 border-gray-200
+  }
+
+  .bg-apple {
+    @apply bg-[#000000]
+  }
+
+  .section-center-layout {
+    @apply w-1/2 max-w-lg min-w-2xs mb-4;
+  }
+
+  .sns_btn_layout {
+    @apply w-1/4 h-14 flex-4 rounded-full;
+  }
 }
