@@ -24,7 +24,7 @@
 
 @layer components {
   .input-primary {
-    @apply w-1/2 max-w-lg min-w-2xs;
+    @apply w-full text-sm border-gray-500 focus-visible:ring-[#8b74ff] focus-visible:ring-1;
   }
 }
 
@@ -56,6 +56,6 @@
   }
 
   .sns_btn_layout {
-    @apply w-1/4 h-14 flex-4 rounded-full;
+    @apply w-13 h-13 rounded-full;
   }
 }
