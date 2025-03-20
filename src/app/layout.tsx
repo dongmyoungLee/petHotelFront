@@ -1,5 +1,5 @@
 import type {Metadata} from "next";
-import "./globals.css";
+import "@/app/globals.css";
 
 export const metadata: Metadata = {
     title: "PetHotel | 강아지, 고양이 및 대형견을 위한 프리미엄 예약 서비스",
@@ -23,7 +23,7 @@ export const metadata: Metadata = {
         card: "summary_large_image",
         title: "PetHotel | 강아지, 고양이 및 대형견을 위한 프리미엄 예약 서비스",
         description: "PetHotel에서는 강아지, 고양이, 대형견을 위한 친화적인 호텔 객실 예약, 컨시어지 서비스, 애완동물 케어 및 교통 서비스를 제공합니다.",
-        image: "/images/pethotel-banner.jpg",
+        images: "/images/pethotel-banner.jpg",
     },
 };
 
