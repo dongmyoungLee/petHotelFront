@@ -1,22 +1,19 @@
-'use client';
-
 import {logout, testMethod} from "@/api/auth/auth";
+import { cookies } from "next/headers";
 
 export default function TestPage() {
+    const cookieStore = cookies();
+    const token = cookieStore.get("access_token")?.value;
 
-    const testMehotds = () => {
-        testMethod().then(res => console.log(res)).catch((err) => console.log(err))
-    }
+    testMethod(token).then(res => console.log(res)).catch((err) => console.log(err))
 
-    const testMehotds2 = () => {
-        logout().then((res) => {console.log(res)}).catch(err => console.error(err))
-    }
-    
 
     return (
       <>
-          <button onClick={testMehotds}>쿠키</button>
-          <button onClick={testMehotds2}>로그아웃</button>
+          <div>
+              <h1>토큰</h1>
+              {token}
+          </div>
       </>
     );
 }

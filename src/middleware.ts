@@ -1,8 +1,8 @@
 import {NextRequest, NextResponse} from "next/server";
-import {cookies} from "next/headers";
-import {RequestCookie, RequestCookies} from "next/dist/compiled/@edge-runtime/cookies";
-import {logout, refresh, validToken} from "@/api/auth/auth";
+import {RequestCookies} from "next/dist/compiled/@edge-runtime/cookies";
+import {refresh, validToken} from "@/api/auth/auth";
 import {TokenResponse} from "@/types/auth/authType";
+import isValidToken from "@/lib/utils/isValidToken";
 
 export async function middleware(req: NextRequest) {
     const { accessToken, refreshToken } = await getTokens(req);
@@ -12,8 +12,14 @@ export async function middleware(req: NextRequest) {
         return NextResponse.redirect(new URL('/', req.url));
     }
 
+    // 프론트에서 먼저 토큰 유효성 검증
+    const { isAccessTokenValid, isRefreshTokenValid } = isValidToken({
+        accesstoken: accessToken.value,
+        refreshtoken: refreshToken.value,
+    })
+
     // AccessToken 유효성 확인
-    const isAccessTokenValid = await validateAccessToken(accessToken.value);
+    // const isAccessTokenValid = await validateAccessToken(accessToken.value);
 
     // AccessToken 유효성 검증 성공
     if (isAccessTokenValid) {

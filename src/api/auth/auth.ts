@@ -49,9 +49,12 @@ export async function logout(token: TokenRequest): Promise<AxiosResponse> {
 }
 
 // 테스트 메서드
-export async function testMethod(): Promise<any> {
+export async function testMethod(token?: string): Promise<any> {
     try {
         const response = await apiClient.get<any>('/api/v1/auth/test', {
+            headers: {
+                Cookie: token || ""
+            },
             withCredentials: true
         });
         return response.data;
