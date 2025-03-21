@@ -1,5 +1,8 @@
 import type {Metadata} from "next";
 import "@/app/globals.css";
+import {Toaster} from "@/components/ui/sonner";
+import {Toast} from "@/components/ui/Toast";
+
 
 export const metadata: Metadata = {
     title: "PetHotel | 강아지, 고양이 및 대형견을 위한 프리미엄 예약 서비스",
@@ -37,6 +40,8 @@ export default function RootLayout({
     <html lang="en">
       <body>
         {children}
+        {/*<Toaster />*/}
+        <Toast />
       </body>
     </html>
   );
