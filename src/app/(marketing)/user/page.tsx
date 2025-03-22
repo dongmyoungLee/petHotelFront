@@ -1,6 +1,5 @@
 'use client';
 
-import SignupForm from "@/components/auth/SignupForm";
 import Image from "next/image";
 import mainLogo from "@/assets/main-logo.webp";
 import {useToast} from "@/hooks/useToast";
@@ -9,9 +8,11 @@ import {signupAction} from "@/lib/actions/signup-actions";
 import {Label} from "@/components/ui/label";
 import {Input} from "@/components/ui/input";
 import SignupFormSubmit from "@/components/auth/SignupFormSubmit";
+import {useRouter} from "next/navigation";
 
 export default function Signup() {
     const { addToast } = useToast();
+    const router = useRouter();
 
     const [state, formAction, pending] = useActionState(signupAction, { message: null, type: null });
 
@@ -49,7 +50,15 @@ export default function Signup() {
 
     useEffect(() => {
         if (state.message !== null) {
+
+            if (state.type === "success") {
+                setTimeout(() => {
+                    router.push('/');
+                }, 500);
+            }
+
             addToast({message : state.message, type : state.type});
+
         }
     }, [state]);
 

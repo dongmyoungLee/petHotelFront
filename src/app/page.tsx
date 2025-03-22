@@ -32,6 +32,10 @@ export default function LoginHome() {
         setPassword(e.target.value);
     };
 
+    const kakaoLogin = () => {
+        window.location.href = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.NEXT_PUBLIC_KAKAO_CLIENT_ID}&redirect_uri=${process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI}&response_type=code`;
+    };
+
 
     useEffect(() => {
         if (state.message !== null) {
@@ -104,10 +108,10 @@ export default function LoginHome() {
                                 </div>
 
                                 <div className="w-full flex justify-center gap-5 mb-6">
-                                    <Button className="bg-kakao sns_btn_layout" asChild>
-                                        <Link href="/kakao">
+                                    <Button onClick={kakaoLogin} className="bg-kakao sns_btn_layout" asChild>
+                                        {/*<Link href="/kakao">*/}
                                             <KaKaoIcon className="size-5" />
-                                        </Link>
+                                        {/*</Link>*/}
                                     </Button>
                                     <Button className="bg-google sns_btn_layout" asChild>
                                         <Link href="/google">
