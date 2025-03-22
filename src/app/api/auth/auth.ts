@@ -1,11 +1,18 @@
-import {LoginRequest, LoginResponse, TokenRequest, TokenResponse} from "@/types/auth/authType";
+import {
+    LoginRequest,
+    LoginResponse,
+    TokenRequest,
+    TokenResponse,
+    UserSignupRequest,
+    UserSignupResponse
+} from "@/types/auth/authType";
 import {apiClient} from "@/app/api/apiClientAxios";
 import {AxiosResponse} from "axios";
 
 // 로그인 요청
-export async function login({ userEmail, userPwd }: LoginRequest): Promise<LoginResponse> {
+export async function login(request : LoginRequest): Promise<LoginResponse> {
     try {
-        const response = await apiClient.post<LoginResponse>('/api/v1/auth',  { userEmail, userPwd }, {
+        const response = await apiClient.post<LoginResponse>('/api/v1/auth',  request, {
             withCredentials : true
         });
         return response.data;
@@ -48,6 +55,16 @@ export async function logout(token: TokenRequest): Promise<AxiosResponse> {
     }
 }
 
+// 회원가입
+export async function signup(request : UserSignupRequest): Promise<UserSignupResponse> {
+    try {
+        const response = await apiClient.post<UserSignupResponse>('/api/v1/users',  request);
+        return response.data;
+    } catch (error) {
+        console.error("Login error:", error);
+        throw error;  // 에러 처리
+    }
+}
 // 테스트 메서드
 export async function testMethod(token?: string): Promise<any> {
     try {

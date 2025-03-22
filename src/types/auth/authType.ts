@@ -21,3 +21,23 @@ export interface TokenResponse {
     message: string;
     statusCode: string;
 }
+
+export interface UserSignupRequest {
+    userEmail: string;
+    userPwd: string;
+    userName: string;
+    userPhone: string;
+    userAddr: string;
+    role: "CUSTOMER" | "ADMIN";
+    status: "PENDING" | "ACTIVE" | "INACTIVE";
+}
+
+export interface UserSignupResponse {
+    userId: string;
+    userEmail: string;
+    userName: string;
+    userPhone: string;
+    userAddr: string;
+    userStatus: "PENDING" | "ACTIVE" | "INACTIVE";
+    userRegistrationDate: number;
+}
