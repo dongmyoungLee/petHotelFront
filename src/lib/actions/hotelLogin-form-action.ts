@@ -4,7 +4,7 @@ import { cookies } from 'next/headers';
 import { LoginResponse } from '@/types/auth/authType';
 import { login } from '@/app/api/auth/auth';
 
-export async function loginFormAction(prevState, formData: FormData) {
+export async function hotelLoginFormAction(prevState, formData: FormData) {
     const userEmail = formData.get('email') as string;
     const userPwd = formData.get('password') as string;
 
