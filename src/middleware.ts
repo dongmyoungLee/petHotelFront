@@ -1,6 +1,6 @@
 import {NextRequest, NextResponse} from "next/server";
 import {RequestCookies} from "next/dist/compiled/@edge-runtime/cookies";
-import {refresh, validToken} from "@/api/auth/auth";
+import {refresh, validToken} from "@/app/api/auth/auth";
 import {TokenResponse} from "@/types/auth/authType";
 import isValidToken from "@/lib/utils/isValidToken";
 
@@ -17,9 +17,6 @@ export async function middleware(req: NextRequest) {
         accesstoken: accessToken.value,
         refreshtoken: refreshToken.value,
     })
-
-    // AccessToken 유효성 확인
-    // const isAccessTokenValid = await validateAccessToken(accessToken.value);
 
     // AccessToken 유효성 검증 성공
     if (isAccessTokenValid) {

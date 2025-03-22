@@ -14,7 +14,7 @@ import {LoginResponse} from "@/types/auth/authType";
 
 import {emailCheck, passCheck} from "@/lib/utils/Reg";
 import {useToast} from "@/hooks/useToast";
-import {login} from "@/api/auth/auth";
+import {login} from "@/app/api/auth/auth";
 import {useActionState, useEffect, useState} from "react";
 import {loginFormAction} from "@/lib/actions/login-form-actions";
 import LoginFormSubmit from "@/components/auth/LoginFormSubmit";

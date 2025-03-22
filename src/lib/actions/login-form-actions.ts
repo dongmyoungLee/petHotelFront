@@ -2,7 +2,7 @@
 
 import { cookies } from 'next/headers';
 import { LoginResponse } from '@/types/auth/authType';
-import { login } from '@/api/auth/auth';
+import { login } from '@/app/api/auth/auth';
 
 export async function loginFormAction(prevState, formData: FormData) {
     const userEmail = formData.get('email') as string;
@@ -13,8 +13,9 @@ export async function loginFormAction(prevState, formData: FormData) {
     if (!userEmail || !userPwd) {
         return { type: 'error', message: '이메일과 비밀번호를 입력해주세요.' };
     }
+
     try {
-        const loginResponse: LoginResponse = await login({ userEmail : "pajang1515@daum.net", userPwd: "password123" });
+        const loginResponse: LoginResponse = await login({ userEmail : userEmail, userPwd: userPwd });
 
         const cookieStore = await cookies();
         const accessTokenExpires = new Date();
@@ -27,7 +28,7 @@ export async function loginFormAction(prevState, formData: FormData) {
         cookieStore.set('access_token', loginResponse.accessToken, {
             httpOnly: true,
             secure: process.env.NODE_ENV === 'production',
-            sameSite: 'strict',
+            sameSite: 'Lac',
             path: '/',
             expires: accessTokenExpires,
         });
@@ -35,10 +36,14 @@ export async function loginFormAction(prevState, formData: FormData) {
         cookieStore.set('refresh_token', loginResponse.refreshToken, {
             httpOnly: true,
             secure: process.env.NODE_ENV === 'production',
-            sameSite: 'strict',
+            sameSite: 'Lac',
             path: '/',
             expires: refreshTokenExpires,
         });
+
+        if (cookieStore.get("access_token")?.value === undefined || cookieStore.get("refresh_token")?.value === undefined) {
+            return { type: 'error', message: '로그인 중 에러가 발생하였습니다.' };
+        }
 
         return { type: 'success', message: '로그인 완료' };
     } catch (error) {

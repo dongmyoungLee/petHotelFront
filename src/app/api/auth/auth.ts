@@ -1,5 +1,5 @@
 import {LoginRequest, LoginResponse, TokenRequest, TokenResponse} from "@/types/auth/authType";
-import {apiClient} from "@/api/apiClientAxios";
+import {apiClient} from "@/app/api/apiClientAxios";
 import {AxiosResponse} from "axios";
 
 // 로그인 요청
@@ -53,9 +53,8 @@ export async function testMethod(token?: string): Promise<any> {
     try {
         const response = await apiClient.get<any>('/api/v1/auth/test', {
             headers: {
-                Cookie: token || ""
-            },
-            withCredentials: true
+                Authorization: `Bearer ${token}`,
+            }
         });
         return response.data;
     } catch (error) {
