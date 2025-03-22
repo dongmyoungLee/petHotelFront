@@ -79,3 +79,13 @@ export async function testMethod(token?: string): Promise<any> {
         throw error;
     }
 }
+
+export async function kakao(code: string): Promise<any> {
+    try {
+        const response = await apiClient.get<any>(`/api/v1/auth/kakao?code=${code}`);
+        return response.data;
+    } catch (error) {
+        console.error("Test method error:", error);
+        throw error;
+    }
+}
