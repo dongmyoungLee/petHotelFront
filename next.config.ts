@@ -12,6 +12,14 @@ const nextConfig: NextConfig = {
     return config;
     },
     reactStrictMode: false,
+    // async rewrites() {
+    //     return [
+    //         {
+    //             source: "",
+    //             destination: "",
+    //         }
+    //     ]
+    // }
 };
 
 export default nextConfig;

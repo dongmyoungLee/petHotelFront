@@ -36,6 +36,10 @@ export default function LoginHome() {
         window.location.href = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.NEXT_PUBLIC_KAKAO_CLIENT_ID}&redirect_uri=${process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI}&response_type=code`;
     };
 
+    const googleLogin = () => {
+        window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}&redirect_uri=${process.env.NEXT_PUBLIC_GOOGLE_REDIRECT_URI}&response_type=code&scope=https://www.googleapis.com/auth/userinfo.email`;
+    };
+
 
     useEffect(() => {
         if (state.message !== null) {
@@ -49,6 +53,7 @@ export default function LoginHome() {
             <main>
                 <LoginCommonTemplate />
                       <section className="section-center-layout flex flex-col">
+                            {/*<form action={formAction}>*/}
                             <form action={formAction}>
                                 <fieldset className="border-0 p-0">
                                     <legend className="sr-only">'로그인 정보 입력'</legend>
@@ -113,10 +118,10 @@ export default function LoginHome() {
                                             <KaKaoIcon className="size-5" />
                                         {/*</Link>*/}
                                     </Button>
-                                    <Button className="bg-google sns_btn_layout" asChild>
-                                        <Link href="/google">
+                                    <Button onClick={googleLogin} className="bg-google sns_btn_layout" asChild>
+                                        {/*<Link href="/google">*/}
                                             <GoogleIcon className="size-5" />
-                                        </Link>
+                                        {/*</Link>*/}
                                     </Button>
                                     <div className="sns_btn_layout bg-primary relative">
                                         <Image fill src={naverLogo} sizes="100%" alt="네이버로그인로고" priority />
