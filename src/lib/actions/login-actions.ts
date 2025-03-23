@@ -48,6 +48,7 @@ export async function loginAction(prevState, formData: FormData) {
 
         return { type: 'success', message: '로그인 완료' };
     } catch (error) {
+        console.error(error)
         return { type: 'error', message: '로그인 정보가 맞지 않습니다.' };
     }
 }
