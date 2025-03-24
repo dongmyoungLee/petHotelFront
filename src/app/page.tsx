@@ -37,11 +37,16 @@ export default function LoginHome() {
     };
 
     const googleLogin = () => {
-        window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}&redirect_uri=${process.env.NEXT_PUBLIC_GOOGLE_REDIRECT_URI}&response_type=code&scope=https://www.googleapis.com/auth/userinfo.email`;
+        window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}&redirect_uri=${process.env.NEXT_PUBLIC_GOOGLE_REDIRECT_URI}&response_type=code&scope=https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile`;
+
     };
 
     const naverLogin = () => {
         window.location.href =`https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${process.env.NEXT_PUBLIC_NAVER_CLIENT_ID}&state=STATE_STRING&redirect_uri=${process.env.NEXT_PUBLIC_NAVER_REDIRECT_URI}`
+    }
+
+    const appleLogin = () => {
+        addToast({message : "홈페이지 배포 후 추가 예정인 기능입니다.", type : "error"});
     }
 
 
@@ -51,6 +56,8 @@ export default function LoginHome() {
         }
 
     }, [state]);
+
+
 
     return (
         <>
@@ -130,10 +137,10 @@ export default function LoginHome() {
                                     <div onClick={naverLogin} className="sns_btn_layout bg-primary relative">
                                         <Image fill src={naverLogo} sizes="100%" alt="네이버로그인로고" priority />
                                     </div>
-                                    <Button className="bg-apple sns_btn_layout" asChild>
-                                        <Link href="/apple">
+                                    <Button onClick={appleLogin} className="bg-apple sns_btn_layout" asChild>
+                                        {/*<Link href="/apple">*/}
                                             <AppleIcon className="size-5 fill-white" />
-                                        </Link>
+                                        {/*</Link>*/}
                                     </Button>
                                 </div>
 

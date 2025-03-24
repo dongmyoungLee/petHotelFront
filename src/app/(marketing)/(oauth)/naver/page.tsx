@@ -13,7 +13,7 @@ export default function Naver() {
             .then((res) => {
                 router.push('/test');
             }).catch((err) => {
-            console.log(err);
+            window.alert("인증 정보가 올바르지 않거나 잘못된 접근입니다.");
         })
     }, []);
     return (
