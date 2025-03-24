@@ -22,16 +22,6 @@ export async function login(request : LoginRequest): Promise<LoginResponse> {
     // }
 }
 
-// 토큰 유효성 검사
-export async function validToken(token: TokenRequest): Promise<TokenResponse> {
-    try {
-        const response: AxiosResponse<any> = await apiClient.post<TokenResponse>('/api/v1/auth/validToken', { token });
-        return response.data;
-    } catch (error) {
-        console.error("Valid token error:", error);
-        throw error;
-    }
-}
 
 // 토큰 갱신
 export async function refresh(token: TokenRequest): Promise<TokenResponse> {
@@ -93,6 +83,16 @@ export async function kakao(code: string): Promise<any> {
 export async function google(code: string): Promise<any> {
     try {
         const response = await apiClient.get<any>(`/api/v1/auth/google?code=${code}`);
+        return response.data;
+    } catch (error) {
+        console.error("Test method error:", error);
+        throw error;
+    }
+}
+
+export async function naver(code: string): Promise<any> {
+    try {
+        const response = await apiClient.get<any>(`/api/v1/auth/naver?code=${code}`);
         return response.data;
     } catch (error) {
         console.error("Test method error:", error);

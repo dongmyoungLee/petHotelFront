@@ -1,6 +1,6 @@
 import {NextRequest, NextResponse} from "next/server";
 import {RequestCookies} from "next/dist/compiled/@edge-runtime/cookies";
-import {refresh, validToken} from "@/app/api/auth/auth";
+import {refresh} from "@/app/api/auth/auth";
 import {TokenResponse} from "@/types/auth/authType";
 import isValidToken from "@/lib/utils/isValidToken";
 
@@ -55,16 +55,6 @@ async function getTokens(req: NextRequest) {
         accessToken: cookies.get("access_token"),
         refreshToken: cookies.get("refresh_token")
     };
-}
-
-async function validateAccessToken(accessToken: string): Promise<boolean> {
-    try {
-        await validToken(accessToken);
-        return true;
-    } catch (error) {
-        if (error.status === 401 ) return false;
-        throw error;
-    }
 }
 
 async function tryRefreshToken(refreshToken: string): Promise<TokenResponse | null> {
