@@ -112,7 +112,7 @@ export default function LoginHome() {
                                             <span className="text-[#5c667b] cursor-pointer">회원가입</span>
                                         </Link>
                                         <div className="w-[1px] h-5 bg-[#5c667b] mx-2"></div>
-                                        <Link href="/test" className="flex-1 flex justify-center items-center">
+                                        <Link href="/" className="flex-1 flex justify-center items-center">
                                             <span className="text-[#5c667b] cursor-pointer">회원찾기</span>
                                         </Link>
                                         <div className="w-[1px] h-5 bg-[#5c667b] mx-2"></div>
