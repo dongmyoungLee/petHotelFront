@@ -1,7 +1,7 @@
 'use client';
 import {useRouter, useSearchParams} from "next/navigation";
 import {useEffect} from "react";
-import {google, naver} from "@/app/api/auth/auth";
+import {google, naver} from "@/app/api/auth/user/auth";
 
 export default function Naver() {
     const searchParams = useSearchParams();

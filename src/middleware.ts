@@ -1,12 +1,11 @@
 import {NextRequest, NextResponse} from "next/server";
 import {RequestCookies} from "next/dist/compiled/@edge-runtime/cookies";
-import {refresh} from "@/app/api/auth/auth";
-import {TokenResponse} from "@/types/auth/authType";
+import {refresh} from "@/app/api/auth/user/auth";
+import {TokenResponse} from "@/types/auth/user/authType";
 import isValidToken from "@/lib/utils/isValidToken";
 
 export async function middleware(req: NextRequest) {
     const { accessToken, refreshToken } = await getTokens(req);
-
     // 쿠키 없으면 홈으로..
     if (!accessToken?.value || !refreshToken?.value) {
         return NextResponse.redirect(new URL('/', req.url));

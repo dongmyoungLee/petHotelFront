@@ -4,7 +4,7 @@ import Image from "next/image";
 import mainLogo from "@/assets/main-logo.webp";
 import {useToast} from "@/hooks/useToast";
 import {useActionState, useEffect, useState} from "react";
-import {signupAction} from "@/lib/actions/signup-actions";
+import {signupAction} from "@/lib/actions/user/signup-actions";
 import {Label} from "@/components/ui/label";
 import {Input} from "@/components/ui/input";
 import SignupFormSubmit from "@/components/auth/SignupFormSubmit";

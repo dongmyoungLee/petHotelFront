@@ -2,7 +2,7 @@
 
 import {useToast} from "@/hooks/useToast";
 import {useActionState, useEffect, useState} from "react";
-import {loginAction} from "@/lib/actions/login-actions";
+import {loginAction} from "@/lib/actions/user/login-actions";
 import LoginCommonTemplate from "@/components/auth/LoginCommonTemplage";
 import {Label} from "@/components/ui/label";
 import {Input} from "@/components/ui/input";
@@ -14,10 +14,12 @@ import GoogleIcon from "@/components/icons/GoogleIcon";
 import Image from "next/image";
 import naverLogo from "@/assets/icon/naver-logo.webp";
 import AppleIcon from "@/components/icons/AppleIcon";
+import {useRouter} from "next/navigation";
 
 
 export default function LoginHome() {
     const { addToast } = useToast();
+    const router = useRouter();
 
     const [state, formAction, pending] = useActionState(loginAction, { message: null, type: null });
 
@@ -52,6 +54,12 @@ export default function LoginHome() {
 
     useEffect(() => {
         if (state.message !== null) {
+            if (state.type === "success") {
+                setTimeout(() => {
+                    router.push('/');
+                }, 500);
+            }
+
             addToast({message : state.message, type : state.type});
         }
 
