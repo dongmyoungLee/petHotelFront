@@ -2,7 +2,7 @@
 
 import {useToast} from "@/hooks/useToast";
 import {useActionState, useEffect, useState} from "react";
-import {loginAction} from "@/lib/actions/login-actions";
+import {loginAction} from "@/lib/actions/user/login-actions";
 import LoginCommonTemplate from "@/components/auth/LoginCommonTemplage";
 import {Label} from "@/components/ui/label";
 import {Input} from "@/components/ui/input";
@@ -14,10 +14,12 @@ import GoogleIcon from "@/components/icons/GoogleIcon";
 import Image from "next/image";
 import naverLogo from "@/assets/icon/naver-logo.webp";
 import AppleIcon from "@/components/icons/AppleIcon";
+import {useRouter} from "next/navigation";
 
 
 export default function LoginHome() {
     const { addToast } = useToast();
+    const router = useRouter();
 
     const [state, formAction, pending] = useActionState(loginAction, { message: null, type: null });
 
@@ -37,20 +39,33 @@ export default function LoginHome() {
     };
 
     const googleLogin = () => {
-        window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}&redirect_uri=${process.env.NEXT_PUBLIC_GOOGLE_REDIRECT_URI}&response_type=code&scope=https://www.googleapis.com/auth/userinfo.email`;
+        window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}&redirect_uri=${process.env.NEXT_PUBLIC_GOOGLE_REDIRECT_URI}&response_type=code&scope=https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile`;
+
     };
 
     const naverLogin = () => {
         window.location.href =`https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${process.env.NEXT_PUBLIC_NAVER_CLIENT_ID}&state=STATE_STRING&redirect_uri=${process.env.NEXT_PUBLIC_NAVER_REDIRECT_URI}`
     }
 
+    const appleLogin = () => {
+        addToast({message : "홈페이지 배포 후 추가 예정인 기능입니다.", type : "error"});
+    }
+
 
     useEffect(() => {
         if (state.message !== null) {
+            if (state.type === "success") {
+                setTimeout(() => {
+                    router.push('/');
+                }, 500);
+            }
+
             addToast({message : state.message, type : state.type});
         }
 
     }, [state]);
+
+
 
     return (
         <>
@@ -130,10 +145,10 @@ export default function LoginHome() {
                                     <div onClick={naverLogin} className="sns_btn_layout bg-primary relative">
                                         <Image fill src={naverLogo} sizes="100%" alt="네이버로그인로고" priority />
                                     </div>
-                                    <Button className="bg-apple sns_btn_layout" asChild>
-                                        <Link href="/apple">
+                                    <Button onClick={appleLogin} className="bg-apple sns_btn_layout" asChild>
+                                        {/*<Link href="/apple">*/}
                                             <AppleIcon className="size-5 fill-white" />
-                                        </Link>
+                                        {/*</Link>*/}
                                     </Button>
                                 </div>
 

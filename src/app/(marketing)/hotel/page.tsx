@@ -5,12 +5,32 @@ import {Label} from "@/components/ui/label";
 import {Input} from "@/components/ui/input";
 import LoginFormSubmit from "@/components/auth/LoginFormSubmit";
 import Link from "next/link";
-import {useState} from "react";
+import {useActionState, useEffect, useState} from "react";
+import {useToast} from "@/hooks/useToast";
+import {useRouter} from "next/navigation";
+import {hotelLoginAction} from "@/lib/actions/hotel/hotel-login-action";
 
 export default function HotelLoginHome() {
+    const { addToast } = useToast();
+    const router = useRouter();
+
+    const [state, formAction, pending] = useActionState(hotelLoginAction, { message: null, type: null });
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+
+    useEffect(() => {
+        if (state.message !== null) {
+            if (state.type === "success") {
+                setTimeout(() => {
+                    router.push('/');
+                }, 500);
+            }
+
+            addToast({message : state.message, type : state.type});
+        }
+
+    }, [state]);
 
     const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setEmail(e.target.value);
@@ -24,7 +44,7 @@ export default function HotelLoginHome() {
             <LoginCommonTemplate isHotel={true} />
 
             <section className="section-center-layout flex flex-col">
-                <form >
+                <form action={formAction}>
                     <fieldset className="border-0 p-0">
                         <legend className="sr-only">'호텔 로그인 정보 입력'</legend>
                         <div className="w-full grid items-center gap-1.5 mb-4">

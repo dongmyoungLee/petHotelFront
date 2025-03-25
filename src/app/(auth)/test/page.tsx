@@ -1,11 +1,10 @@
-import {logout, testMethod} from "@/app/api/auth/auth";
-import { cookies } from "next/headers";
+import {cookies} from "next/headers";
 
 export default async function TestPage() {
     const cookieStore = await cookies();
     const token = cookieStore.get("access_token")?.value;
 
-    testMethod(token).then(res => console.log(res)).catch((err) => console.log(err))
+
 
 
     return (
