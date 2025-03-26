@@ -26,13 +26,13 @@ export const menus = {
             isActive: true,
             items: [
                 {
-                    title: "호텔조회",
+                    title: "호텔정보",
                     url: "/dashboard/hotel",
                 },
-                {
-                    title: "호텔추가",
-                    url: "/dashboard/hotel/new",
-                }
+                // {
+                //     title: "호텔추가",
+                //     url: "/dashboard/hotel/new",
+                // }
             ],
         },
         {
@@ -42,20 +42,15 @@ export const menus = {
             icon: BookOpen,
             items: [
                 {
-                    title: "객실조회",
-                    url: "#",
+                    title: "객실정보",
+                    url: "/dashboard/room",
                 },
-                {
-                    title: "객실추가",
-                    url: "#",
-                }
             ],
         },
         {
             title: "Settings",
             url: "#",
             icon: Settings2,
-            isActive: true,
             items: [
                 {
                     title: "Mypage",
