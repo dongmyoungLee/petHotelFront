@@ -15,28 +15,30 @@ export const menus = {
             items: [
                 {
                     title: "예약현황",
-                    url: "#",
+                    url: "/dashboard/reservation",
                 }
             ],
         },
         {
-            title: "Hotels",
+            title: "Hotel",
             url: "#",
             icon: Bot,
+            isActive: true,
             items: [
                 {
                     title: "호텔조회",
-                    url: "/adminPage/hotel",
+                    url: "/dashboard/hotel",
                 },
                 {
                     title: "호텔추가",
-                    url: "/adminPage/hotel/new",
+                    url: "/dashboard/hotel/new",
                 }
             ],
         },
         {
             title: "Rooms",
             url: "#",
+            isActive: true,
             icon: BookOpen,
             items: [
                 {
@@ -53,6 +55,7 @@ export const menus = {
             title: "Settings",
             url: "#",
             icon: Settings2,
+            isActive: true,
             items: [
                 {
                     title: "Mypage",
