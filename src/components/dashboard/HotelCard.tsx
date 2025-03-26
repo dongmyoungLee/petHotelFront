@@ -1,9 +1,22 @@
+'use client';
+
+import { useState, useEffect } from "react";
 import Image from "next/image";
 
 export default function HotelCard() {
+    const [isClient, setIsClient] = useState(false);
+
+    useEffect(() => {
+        setIsClient(true);
+    }, []);
+
+    if (!isClient) {
+        return <div className="w-full h-full bg-gray-200 animate-pulse rounded-xl"></div>;
+    }
+
     return (
         <div className="w-full h-full shadow-sm rounded-xl flex flex-col">
-            <div className="relative w-full aspect-video  mb-4">
+            <div className="relative w-full aspect-video mb-4">
                 <Image
                     src="https://dnvefa72aowie.cloudfront.net/origin/article/202010/ba45503df6dbb48f978e90c1a3b626f24459b842d54ca9b40707ad02cc68c10e.webp?q=95&s=1440x1440&t=inside"
                     alt="호텔 프로필"
@@ -26,7 +39,7 @@ export default function HotelCard() {
                 <p className="text-gray-600 mb-1">
                     <span className="font-semibold">웹사이트:</span>{" "}
                     <a
-                        href="www.dogheavenhotel.com"
+                        href="https://www.dogheavenhotel.com"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="text-blue-500"
