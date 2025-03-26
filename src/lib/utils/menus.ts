@@ -15,38 +15,36 @@ export const menus = {
             items: [
                 {
                     title: "예약현황",
-                    url: "#",
+                    url: "/dashboard/reservation",
                 }
             ],
         },
         {
-            title: "Hotels",
+            title: "Hotel",
             url: "#",
             icon: Bot,
+            isActive: true,
             items: [
                 {
-                    title: "호텔조회",
-                    url: "/adminPage/hotel",
+                    title: "호텔정보",
+                    url: "/dashboard/hotel",
                 },
-                {
-                    title: "호텔추가",
-                    url: "/adminPage/hotel/new",
-                }
+                // {
+                //     title: "호텔추가",
+                //     url: "/dashboard/hotel/new",
+                // }
             ],
         },
         {
             title: "Rooms",
             url: "#",
+            isActive: true,
             icon: BookOpen,
             items: [
                 {
-                    title: "객실조회",
-                    url: "#",
+                    title: "객실정보",
+                    url: "/dashboard/room",
                 },
-                {
-                    title: "객실추가",
-                    url: "#",
-                }
             ],
         },
         {

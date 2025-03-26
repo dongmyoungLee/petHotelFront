@@ -33,6 +33,10 @@ export function NavMain({
     }[]
   }[]
 }) {
+  const handleSavePath = (url: string) => {
+    const pathSegments = url.split("/").filter(Boolean);
+    localStorage.setItem("navPath", JSON.stringify(pathSegments));
+  }
   return (
     <SidebarGroup>
       <SidebarGroupLabel>관리자페이지</SidebarGroupLabel>
@@ -59,7 +63,7 @@ export function NavMain({
                       {item.items?.map((subItem) => (
                         <SidebarMenuSubItem key={subItem.title}>
                           <SidebarMenuSubButton asChild>
-                            <a href={subItem.url}>
+                            <a href={subItem.url} onClick={() => handleSavePath(subItem.url)}>
                               <span>{subItem.title}</span>
                             </a>
                           </SidebarMenuSubButton>
