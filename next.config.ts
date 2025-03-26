@@ -12,6 +12,9 @@ const nextConfig: NextConfig = {
     return config;
     },
     reactStrictMode: false,
+    images: {
+        domains: ['dnvefa72aowie.cloudfront.net'],
+    },
     // async rewrites() {
     //     return [
     //         {
