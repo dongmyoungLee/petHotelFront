@@ -15,16 +15,19 @@ import Image from "next/image";
 import naverLogo from "@/assets/icon/naver-logo.webp";
 import AppleIcon from "@/components/icons/AppleIcon";
 import {useRouter} from "next/navigation";
+import {useUserInfo} from "@/hooks/useUserInfo";
 
 
 export default function LoginHome() {
     const { addToast } = useToast();
     const router = useRouter();
 
-    const [state, formAction, pending] = useActionState(loginAction, { message: null, type: null });
+    const [state, formAction, pending] = useActionState(loginAction, { message: null, type: null, userInfo: null });
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const { setUserInfo } = useUserInfo();
+
 
     const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setEmail(e.target.value);
@@ -55,6 +58,9 @@ export default function LoginHome() {
     useEffect(() => {
         if (state.message !== null) {
             if (state.type === "success") {
+                // ✅ Zustand에 사용자 정보 저장
+                setUserInfo(state.userInfo);
+
                 setTimeout(() => {
                     router.push('/');
                 }, 500);

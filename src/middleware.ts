@@ -1,8 +1,9 @@
 import {NextRequest, NextResponse} from "next/server";
 import {RequestCookies} from "next/dist/compiled/@edge-runtime/cookies";
-import {refresh} from "@/app/api/auth/user/auth";
-import {TokenResponse} from "@/types/auth/user/authType";
+import {parseToken, refresh} from "@/app/api/auth/user/auth";
+import {TokenResponse, UserAuthority} from "@/types/auth/user/authType";
 import isValidToken from "@/lib/utils/isValidToken";
+import {AxiosResponse} from "axios";
 
 export async function middleware(req: NextRequest) {
     const { accessToken, refreshToken } = await getTokens(req);
@@ -19,6 +20,12 @@ export async function middleware(req: NextRequest) {
 
     // AccessToken 유효성 검증 성공
     if (isAccessTokenValid) {
+
+        // adminpage 경로에 대한 추가 검사
+        if (req.nextUrl.pathname.startsWith('/dashboard')) {
+            return await checkRole(req, accessToken.value);
+        }
+
         return NextResponse.next();
     }
 
@@ -65,9 +72,26 @@ async function tryRefreshToken(refreshToken: string): Promise<TokenResponse | nu
     }
 }
 
+async function checkRole(req: NextRequest, accessToken: string) {
+    const tokenResponse:AxiosResponse<any> = await parseToken(accessToken);
+
+    if (tokenResponse.status === 401) {
+        // 토큰 파싱 불가 시 리다이렉트
+        return NextResponse.redirect(new URL('/', req.url));
+    }
+
+    const userAuth: UserAuthority = tokenResponse;
+
+    if (userAuth.role === "CUSTOMER") {
+        // 토큰 파싱 후 인가 확인 후 리다이렉트
+        return NextResponse.redirect(new URL('/', req.url));
+    }
+
+    return NextResponse.next();
+}
 
 export const config = {
     matcher: [
-        "/test",
+        "/dashboard/:path*",
     ],
 };
