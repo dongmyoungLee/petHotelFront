@@ -90,10 +90,6 @@ async function checkRole(req: NextRequest, accessToken: string) {
     return NextResponse.next();
 }
 
-
-
-
-
 export const config = {
     matcher: [
         "/dashboard/:path*",
