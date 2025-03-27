@@ -47,8 +47,17 @@ export async function hotelLoginAction(prevState, formData: FormData) {
     if (cookieStore.get("access_token")?.value === undefined || cookieStore.get("refresh_token")?.value === undefined) {
         return { type: 'error', message: '로그인 중 에러가 발생하였습니다.' };
     }
-
-    return { type: 'success', message: '로그인 완료' };
-
+    // return { type: 'success', message: '로그인 완료' };
+    // 🚀 클라이언트에서 Zustand에 저장할 수 있도록 사용자 정보 반환
+    return {
+        type: 'success',
+        message: '로그인 완료',
+        adminInfo: {
+            role: loginResponse.role,
+            id: loginResponse.id,
+            email: loginResponse.email,
+            userName: loginResponse.name,
+        },
+    };
 
 }

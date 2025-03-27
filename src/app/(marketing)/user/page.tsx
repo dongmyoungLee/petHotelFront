@@ -10,6 +10,7 @@ import {Input} from "@/components/ui/input";
 import SignupFormSubmit from "@/components/auth/SignupFormSubmit";
 import {useRouter} from "next/navigation";
 
+
 export default function Signup() {
     const { addToast } = useToast();
     const router = useRouter();
@@ -68,7 +69,6 @@ export default function Signup() {
             <header className="section-center-layout mb-4">
                 <Image className="w-full transform scale-90" src={mainLogo} alt="애견호텔 로고" priority />
             </header>
-
             <h1 className="mb-6 text-4xl md:text-5xl font-light tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-gray-800 to-gray-600 drop-shadow-lg">
                 PETHOTEL
             </h1>
