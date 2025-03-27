@@ -2,6 +2,8 @@
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
+import useUserInfo from "@/hooks/useUserInfo";
+import {useStore} from "@/hooks/useStore";
 
 export default function HotelCard() {
     const [isClient, setIsClient] = useState(false);

@@ -9,12 +9,14 @@ import {useActionState, useEffect, useState} from "react";
 import {useToast} from "@/hooks/useToast";
 import {useRouter} from "next/navigation";
 import {hotelLoginAction} from "@/lib/actions/hotel/hotel-login-action";
+import {useAdminInfo, useUserInfo} from "@/hooks/useUserInfo";
 
 export default function HotelLoginHome() {
     const { addToast } = useToast();
+    const { setAdminInfo } = useAdminInfo();
     const router = useRouter();
 
-    const [state, formAction, pending] = useActionState(hotelLoginAction, { message: null, type: null });
+    const [state, formAction, pending] = useActionState(hotelLoginAction, { message: null, type: null, adminInfo: null });
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -22,6 +24,7 @@ export default function HotelLoginHome() {
     useEffect(() => {
         if (state.message !== null) {
             if (state.type === "success") {
+                setAdminInfo(state.adminInfo);
                 setTimeout(() => {
                     router.push('/');
                 }, 500);

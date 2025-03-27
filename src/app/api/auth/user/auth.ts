@@ -33,6 +33,16 @@ export async function refresh(token: TokenRequest): Promise<TokenResponse> {
     }
 }
 
+// 토큰 파싱
+export async function parseToken(token: TokenRequest): Promise<AxiosResponse> {
+    try {
+        const response: AxiosResponse = await apiClient.post<AxiosResponse>('/api/v1/auth/validToken', { token });
+        return response.data;
+    } catch (error) {
+        return error;
+    }
+}
+
 // 로그아웃
 export async function logout(token: TokenRequest): Promise<AxiosResponse> {
     try {
