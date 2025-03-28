@@ -19,8 +19,6 @@ export async function loginAction(prevState, formData: FormData) {
     const response: AxiosResponse = await userLogin({ userEmail : userEmail, userPwd: userPwd });
     const loginResponse = response.data;
 
-    console.log(loginResponse)
-
 
     if (response.status !== 200) {
         return {type: 'error', message: '로그인 정보가 올바르지 않습니다.'};
