@@ -49,6 +49,15 @@ export interface UserInfo {
     userName: string;
 }
 
+export interface UserInfoTokenType {
+    accessToken: string;
+    refreshToken: string;
+    role: string;
+    id: string;
+    email: string;
+    userName: string;
+}
+
 
 
 export interface UserInfoState {

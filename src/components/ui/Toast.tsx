@@ -5,11 +5,12 @@ import { useTheme } from "next-themes"
 import { Toaster } from "sonner"
 
 export const Toast = () => {
-    const { theme = "system" } = useTheme()
+    const { theme = "system" } = useTheme();
+
 
     return (
         <Toaster
-            theme={theme}
+            theme={theme as "system" | "light" | "dark" | undefined}
             position="top-center"
             duration={2000}
             richColors

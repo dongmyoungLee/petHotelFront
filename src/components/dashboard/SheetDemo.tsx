@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/sheet"
 import {useState} from "react";
 
-export function SheetDemo(props) {
+export function SheetDemo(props: any) {
     const [open, setOpen] = useState(false);
     const [formData, setFormData] = useState<{ [key: string]: string }>({});
 
@@ -44,7 +44,7 @@ export function SheetDemo(props) {
                 </SheetHeader>
                 <form onSubmit={handleSubmit}>
                     <div className="grid gap-4 p-4">
-                        {props.data.contents.map((item, idx) => (
+                        {props.data.contents.map((item: any, idx: number) => (
                             <div key={item + idx} className="grid grid-cols-4 items-center gap-4">
                                 <Label htmlFor={item} className="text-right">
                                     {item}

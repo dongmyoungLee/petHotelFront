@@ -7,7 +7,7 @@ import {usePathname} from "next/navigation";
 import {useEffect, useState} from "react";
 
 export default function AppHeader() {
-    const [pathSegments, setPathSegments] = useState([]);
+    const [pathSegments, setPathSegments] = useState<string[]>([]);
     const pathname = usePathname();
 
     useEffect(() => {
@@ -16,7 +16,7 @@ export default function AppHeader() {
         }
     }, [pathname]);
 
-    const getBreadcrumbText = (segment) => {
+    const getBreadcrumbText = (segment: string) => {
         switch (segment) {
             case 'reservation':
                 return '예약현황';
