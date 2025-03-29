@@ -4,10 +4,11 @@ import {cookies} from 'next/headers';
 import {userLogin} from '@/app/api/auth/user/auth';
 import {AxiosResponse} from "axios";
 import {useUserInfo} from "@/hooks/useUserInfo";
+import {UserInfoTokenType} from "@/types/auth/user/authType";
 
-export async function loginAction(prevState, formData: FormData) {
-    const userEmail = formData.get('email') as string;
-    const userPwd = formData.get('password') as string;
+export async function loginAction(prevState: any, formData: FormData) {
+    const userEmail: string | null = formData.get('email')?.toString() || null;
+    const userPwd: string | null = formData.get('password')?.toString() || null;
     const { setUserInfo } = useUserInfo.getState();
 
     if (!userEmail || !userPwd) {
@@ -16,11 +17,11 @@ export async function loginAction(prevState, formData: FormData) {
 
     await new Promise(resolve => setTimeout(resolve, 1000));
 
-    const response: AxiosResponse = await userLogin({ userEmail : userEmail, userPwd: userPwd });
-    const loginResponse = response.data;
+    let loginResponse: UserInfoTokenType;
 
-
-    if (response.status !== 200) {
+    try {
+        loginResponse = await userLogin({ userEmail : userEmail, userPwd: userPwd });
+    } catch (error) {
         return {type: 'error', message: '로그인 정보가 올바르지 않습니다.'};
     }
 
@@ -32,38 +33,37 @@ export async function loginAction(prevState, formData: FormData) {
     accessTokenExpires.setMinutes(expires.getMinutes() + 30);
     refreshTokenExpires.setDate(expires.getDate() + 7);
 
-    cookieStore.set('access_token', loginResponse.accessToken, {
+    const accessTokenCookieOptions: Partial<any> = {
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production',
-        sameSite: 'Lax',
+        sameSite: 'lax',
         path: '/',
         expires: accessTokenExpires,
-    });
+    };
 
-    cookieStore.set('refresh_token', loginResponse.refreshToken, {
+    const refreshTokenCookieOptions: Partial<any> = {
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production',
-        sameSite: 'Lax',
+        sameSite: 'lax',
         path: '/',
         expires: refreshTokenExpires,
-    });
+    };
+
+    cookieStore.set('access_token', loginResponse.accessToken, accessTokenCookieOptions);
+    cookieStore.set('refresh_token', loginResponse.refreshToken, refreshTokenCookieOptions);
+
 
     if (cookieStore.get("access_token")?.value === undefined || cookieStore.get("refresh_token")?.value === undefined) {
         return { type: 'error', message: '로그인 중 에러가 발생하였습니다.' };
     }
 
-    //사용자 정보를 zustand에 저장
-
     setUserInfo({
         role: loginResponse.role,
         id: loginResponse.id,
-        profileUrl: loginResponse.profileUrl,
-        userName: loginResponse.name,
+        email: loginResponse.email,
+        userName: loginResponse.userName,
     });
 
-
-    // return { type: 'success', message: '로그인 완료' };
-    // 🚀 클라이언트에서 Zustand에 저장할 수 있도록 사용자 정보 반환
     return {
         type: 'success',
         message: '로그인 완료',
@@ -71,7 +71,7 @@ export async function loginAction(prevState, formData: FormData) {
             role: loginResponse.role,
             id: loginResponse.id,
             email: loginResponse.email,
-            userName: loginResponse.name,
+            userName: loginResponse.userName,
         },
     };
 

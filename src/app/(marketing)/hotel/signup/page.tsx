@@ -10,7 +10,7 @@ import {hotelSignupAction} from "@/lib/actions/hotel/hotel-signup-action";
 
 export default function HotelSignupHome() {
         const { addToast } = useToast();
-        const [state, formAction, pending] = useActionState(hotelSignupAction, { message: null, type: null });
+        const [state, formAction, pending] = useActionState<any, FormData>(hotelSignupAction, { message: null, type: null });
         const [email, setEmail] = useState('');
         const [password, setPassword] = useState('');
         const [passwordCheck, setPasswordCheck] = useState('');

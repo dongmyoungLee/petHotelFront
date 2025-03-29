@@ -11,7 +11,6 @@ export interface HotelSignupResponse {
     companyEmail: string;
     companyName: string;
     companyPhone: string;
-    userAddr: string;
     companyStatus: "PENDING" | "ACTIVE" | "INACTIVE";
     companyRegistrationDate: number;
 }

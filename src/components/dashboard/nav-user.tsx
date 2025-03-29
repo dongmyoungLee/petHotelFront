@@ -19,8 +19,8 @@ import {UserInfo} from "@/types/auth/user/authType";
 
 export function NavUser() {
   const { isMobile } = useSidebar();
-  // const { user } = useUserInfo();
-  const adminInfo:UserInfo = useStore(useAdminInfo, (state) => {
+
+  const adminInfo:UserInfo|undefined = useStore(useAdminInfo, (state) => {
       return state.adminInfo;
   });
 

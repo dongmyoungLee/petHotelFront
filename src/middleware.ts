@@ -30,27 +30,30 @@ export async function middleware(req: NextRequest) {
     }
 
     // AccessToken 만료 -> RefreshToken으로 갱신 시도
-    const refreshData = await tryRefreshToken(refreshToken.value);
+    const refreshData: TokenResponse|null = await tryRefreshToken(refreshToken.value);
 
     // RefreshToken 만료 -> 로그아웃 및 쿠키 삭제
     if (!refreshData) {
-        const res =NextResponse.redirect(new URL('/', req.url));
+        const res = NextResponse.redirect(new URL('/', req.url));
 
         // 쿠키 삭제
-        res.cookies.delete("access_token", { path: "/" });
-        res.cookies.delete("refresh_token", { path: "/" });
+        res.cookies.delete("access_token");
+        res.cookies.delete("refresh_token");
 
         return res;
     }
 
     // 갱신 성공 -> 새로운 AccessToken 설정
     const res = NextResponse.next();
-    res.cookies.set("access_token", refreshData.accessToken, {
-        httpOnly: true,
-        sameSite: "Lax",
-        path: "/",
-        secure: false,
-    });
+
+    if (refreshData.accessToken) {
+        res.cookies.set("access_token", refreshData.accessToken, {
+            httpOnly: true,
+            sameSite: "Lax" as boolean | "lax" | "strict" | "none" | undefined,
+            path: "/",
+            secure: false,
+        });
+    }
 
     return res;
 }
@@ -64,25 +67,28 @@ async function getTokens(req: NextRequest) {
 }
 
 async function tryRefreshToken(refreshToken: string): Promise<TokenResponse | null> {
+    let response: TokenResponse|null = null;
+
     try {
-        return await refresh(refreshToken);
-    } catch (error) {
-        if (error.status === 401) return null;
-        throw error;
+        response =  await refresh(refreshToken);
+    } catch (error){
+        console.log(error)
     }
+
+    return response;
 }
 
 async function checkRole(req: NextRequest, accessToken: string) {
-    const tokenResponse:AxiosResponse<any> = await parseToken(accessToken);
 
-    if (tokenResponse.status === 401) {
-        // 토큰 파싱 불가 시 리다이렉트
+    let tokenResponse:UserAuthority;
+
+    try {
+        tokenResponse = await parseToken(accessToken);
+    } catch (error) {
         return NextResponse.redirect(new URL('/', req.url));
     }
 
-    const userAuth: UserAuthority = tokenResponse;
-
-    if (userAuth.role === "CUSTOMER") {
+    if (tokenResponse.role === "CUSTOMER") {
         // 토큰 파싱 후 인가 확인 후 리다이렉트
         return NextResponse.redirect(new URL('/', req.url));
     }

@@ -15,7 +15,7 @@ export default function Signup() {
     const { addToast } = useToast();
     const router = useRouter();
 
-    const [state, formAction, pending] = useActionState(signupAction, { message: null, type: null });
+    const [state, formAction, pending] = useActionState<any, FormData>(signupAction, { message: null, type: null });
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');

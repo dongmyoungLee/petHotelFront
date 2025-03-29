@@ -15,9 +15,14 @@ export default async function HotelPage() {
         contents : ['업체명', '주소', '연락처', '사이트','대표자'],
     }
 
-    const response: any  = await getHotelByCompany(token);
+    let data:Hotel[] = [];
 
-    const data: Hotel[] = response.data;
+    try {
+        data = await getHotelByCompany(token);
+    } catch (error) {
+        data = [];
+        console.log(error)
+    }
 
     return (
         <>
