@@ -1,16 +1,16 @@
 'use server';
 
 import {emailCheck} from "@/lib/utils/reg";
-import {HotelSignupRequest} from "@/types/auth/hotel/authType";
+import {HotelSignupRequest, HotelSignupResponse} from "@/types/auth/hotel/authType";
 import {hotelSignup} from "@/app/api/auth/hotel/auth";
-import {AxiosResponse} from "axios";
+import {AxiosError, AxiosResponse} from "axios";
 
-export async function hotelSignupAction(prevState, formData: FormData) {
-    const companyEmail: string = formData.get('email');
-    const companyPwd: string = formData.get('password');
-    const passwordCheck: string = formData.get('passwordCheck');
-    const companyName: string = formData.get('name');
-    const companyPhone: string = formData.get('phone');
+export async function hotelSignupAction(prevState: any, formData: FormData) {
+    const companyEmail: string | null = formData.get('email')?.toString() || null;
+    const companyPwd: string | null = formData.get('password')?.toString() || null;
+    const passwordCheck: string | null = formData.get('passwordCheck')?.toString() || null;
+    const companyName: string | null = formData.get('name')?.toString() || null;
+    const companyPhone: string | null = formData.get('phone')?.toString() || null;
 
     if (!companyEmail || !companyPwd || !passwordCheck || !companyName || !companyPhone) {
         return { type: 'error', message: '모든 정보를 입력 하셔야 합니다.' };
@@ -39,11 +39,14 @@ export async function hotelSignupAction(prevState, formData: FormData) {
 
     await new Promise(resolve => setTimeout(resolve, 1000));
 
-    const response: AxiosResponse = await hotelSignup(hotelSignupRequest);
-
-    if (response.status !== 201) {
-        return { type: 'error', message: response.response.data };
+    try {
+        const response: HotelSignupResponse = await hotelSignup(hotelSignupRequest);
+        return { type: 'success', message: '회원가입 완료' };
+    } catch (error) {
+        if (error instanceof AxiosError) {
+            return { type: 'error', message: error.response?.data || '회원가입 중 오류가 발생했습니다.' };
+        } else {
+            return { type: 'error', message: '회원가입 중 예상치 못한 오류가 발생했습니다.' };
+        }
     }
-
-    return { type: 'success', message: '회원가입 완료' };
 }

@@ -1,13 +1,11 @@
 'use server';
 
-import {LoginResponse, UserSignupRequest} from '@/types/auth/user/authType';
-import {userLogin, signup} from '@/app/api/auth/user/auth';
+import {UserSignupRequest, UserSignupResponse} from '@/types/auth/user/authType';
+import {signup} from '@/app/api/auth/user/auth';
 import {emailCheck} from "@/lib/utils/reg";
-import {redirect} from "next/navigation";
-import {AxiosResponse} from "axios";
-import {hotelSignup} from "@/app/api/auth/hotel/auth";
+import {AxiosError, AxiosResponse} from "axios";
 
-export async function signupAction(prevState, formData: FormData) {
+export async function signupAction(prevState: any, formData: FormData) {
     const userEmail = formData.get('email') as string;
     const userPwd = formData.get('password') as string;
     const userPwdCheck = formData.get('passwordCheck') as string;
@@ -43,13 +41,18 @@ export async function signupAction(prevState, formData: FormData) {
         status: "PENDING",
     };
 
-    const signUpResponse: AxiosResponse = await signup(userSignupRequest);
+    let signUpResponse: UserSignupResponse;
 
-    if (signUpResponse.status !== 201) {
-        return { type: 'error', message: signUpResponse.response.data };
+    try {
+        signUpResponse = await signup(userSignupRequest);
+        return { type: 'success', message: '회원가입 완료' };
+    } catch (error) {
+        if (error instanceof AxiosError) {
+            return { type: 'error', message: error.response?.data || '회원가입 중 오류가 발생했습니다.' };
+        } else {
+            return { type: 'error', message: '회원가입 중 예상치 못한 오류가 발생했습니다.' };
+        }
     }
-
-    return { type: 'success', message: '회원가입 완료' };
 }
 
 

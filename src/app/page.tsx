@@ -22,7 +22,7 @@ export default function LoginHome() {
     const { addToast } = useToast();
     const router = useRouter();
 
-    const [state, formAction, pending] = useActionState(loginAction, { message: null, type: null, userInfo: null });
+    const [state, formAction] = useActionState<any, FormData>(loginAction, { message: null, type: null, userInfo: null });
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');

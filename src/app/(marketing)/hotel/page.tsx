@@ -16,7 +16,7 @@ export default function HotelLoginHome() {
     const { setAdminInfo } = useAdminInfo();
     const router = useRouter();
 
-    const [state, formAction, pending] = useActionState(hotelLoginAction, { message: null, type: null, adminInfo: null });
+    const [state, formAction, pending] = useActionState<any, FormData>(hotelLoginAction, { message: null, type: null, adminInfo: null });
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');

@@ -1,11 +1,11 @@
 'use server';
-import {AxiosResponse} from "axios";
 import {cookies} from "next/headers";
 import {hotelLogin} from "@/app/api/auth/hotel/auth";
+import {UserInfoTokenType} from "@/types/auth/user/authType";
 
-export async function hotelLoginAction(prevState, formData: FormData) {
-    const hotelEmail:string = formData.get('email');
-    const hotelPwd:string = formData.get('password');
+export async function hotelLoginAction(prevState: any, formData: FormData) {
+    const hotelEmail: string | null = formData.get('email')?.toString() || null;
+    const hotelPwd: string | null = formData.get('password')?.toString() || null;
 
     if (!hotelEmail || !hotelPwd) {
         return { type: 'error', message: '이메일과 비밀번호를 입력해주세요.' };
@@ -13,10 +13,11 @@ export async function hotelLoginAction(prevState, formData: FormData) {
 
     await new Promise(resolve => setTimeout(resolve, 1000));
 
-    const response: AxiosResponse = await hotelLogin({ userEmail : hotelEmail, userPwd: hotelPwd });
-    const loginResponse = response.data;
+    let loginResponse: UserInfoTokenType;
 
-    if (response.status !== 200) {
+    try {
+        loginResponse = await hotelLogin({ userEmail : hotelEmail, userPwd: hotelPwd });
+    } catch (error) {
         return {type: 'error', message: '로그인 정보가 올바르지 않습니다.'};
     }
 
@@ -28,21 +29,24 @@ export async function hotelLoginAction(prevState, formData: FormData) {
     accessTokenExpires.setMinutes(expires.getMinutes() + 30);
     refreshTokenExpires.setDate(expires.getDate() + 7);
 
-    cookieStore.set('access_token', loginResponse.accessToken, {
+    const accessTokenCookieOptions: Partial<any> = {
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production',
-        sameSite: 'Lax',
+        sameSite: 'lax', // Corrected to lowercase 'lax'
         path: '/',
         expires: accessTokenExpires,
-    });
+    };
 
-    cookieStore.set('refresh_token', loginResponse.refreshToken, {
+    const refreshTokenCookieOptions: Partial<any> = {
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production',
-        sameSite: 'Lax',
+        sameSite: 'lax', // Corrected to lowercase 'lax'
         path: '/',
         expires: refreshTokenExpires,
-    });
+    };
+
+    cookieStore.set('access_token', loginResponse.accessToken, accessTokenCookieOptions);
+    cookieStore.set('refresh_token', loginResponse.refreshToken, refreshTokenCookieOptions);
 
     if (cookieStore.get("access_token")?.value === undefined || cookieStore.get("refresh_token")?.value === undefined) {
         return { type: 'error', message: '로그인 중 에러가 발생하였습니다.' };
@@ -56,7 +60,7 @@ export async function hotelLoginAction(prevState, formData: FormData) {
             role: loginResponse.role,
             id: loginResponse.id,
             email: loginResponse.email,
-            userName: loginResponse.name,
+            userName: loginResponse.userName,
         },
     };
 

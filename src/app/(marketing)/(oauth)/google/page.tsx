@@ -1,33 +1,48 @@
 'use client';
 
-import {useRouter, useSearchParams} from "next/navigation";
-import {useEffect} from "react";
-import {google} from "@/app/api/auth/user/auth";
-import {useUserInfo} from "@/hooks/useUserInfo";
-import {UserInfo} from "@/types/auth/user/authType";
+import { useRouter, useSearchParams } from "next/navigation";
+import { Suspense, useEffect } from "react";
+import { google } from "@/app/api/auth/user/auth";
+import { useUserInfo } from "@/hooks/useUserInfo";
+import { UserInfoTokenType } from "@/types/auth/user/authType";
 
-export default function Google() {
+function GoogleAuth() {
     const searchParams = useSearchParams();
     const router = useRouter();
-    const code = searchParams.get('code');
+    const code: string | null = searchParams.get('code');
     const { setUserInfo } = useUserInfo();
 
     useEffect(() => {
+        if (!code) {
+            window.alert("인증 코드가 없습니다.");
+            router.push('/');
+            return;
+        }
+
         google(code)
-            .then((res: UserInfo) => {
+            .then((res: UserInfoTokenType) => {
                 setUserInfo({
                     role: res.role,
                     id: res.id,
                     email: res.email,
                     userName: res.userName,
                 });
-                router.push('/test');
-            }).catch((err) => {
-            window.alert("인증 정보가 올바르지 않거나 잘못된 접근입니다.");
-        })
-    }, []);
 
+                router.push('/test');
+            })
+            .catch(() => {
+                window.alert("인증 정보가 올바르지 않거나 잘못된 접근입니다.");
+                router.push('/');
+            });
+    }, [code, router, setUserInfo]);
+
+    return <h2>로그인 중 입니다..</h2>;
+}
+
+export default function Google() {
     return (
-        <h2>로그인 중 입니다..</h2>
+        <Suspense fallback={<h2>로딩 중...</h2>}>
+            <GoogleAuth />
+        </Suspense>
     );
 }
