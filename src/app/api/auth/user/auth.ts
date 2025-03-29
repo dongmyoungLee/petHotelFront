@@ -2,7 +2,7 @@ import {
     LoginRequest,
     LoginResponse,
     TokenRequest,
-    TokenResponse,
+    TokenResponse, UserInfoTokenType,
     UserSignupRequest,
     UserSignupResponse
 } from "@/types/auth/user/authType";
@@ -74,14 +74,9 @@ export async function kakao(code: string): Promise<AxiosResponse> {
     }
 }
 
-export async function google(code: string): Promise<AxiosResponse> {
-    try {
-        const response = await apiClient.get<AxiosResponse>(`/api/v1/auth/google?code=${code}`);
-        return response.data;
-    } catch (error) {
-        console.error("Test method error:", error);
-        throw error;
-    }
+export async function google(code: string|null): Promise<UserInfoTokenType> {
+    const response: AxiosResponse = await apiClient.get<AxiosResponse>(`/api/v1/auth/google?code=${code}`);
+    return response.data;
 }
 
 export async function naver(code: string): Promise<AxiosResponse> {
