@@ -3,6 +3,7 @@ import {SheetDemo} from "@/components/dashboard/SheetDemo";
 import {cookies} from "next/headers";
 import {Dialog} from "@/types/auth/common/authType";
 import {getHotelByCompany} from "@/app/api/auth/hotel/auth";
+import {Hotel} from "@/types/auth/hotel/authType";
 
 export default async function HotelPage() {
     const cookieStore = await cookies();
@@ -16,7 +17,7 @@ export default async function HotelPage() {
 
     const response: any  = await getHotelByCompany(token);
 
-    const data = response.data;
+    const data: Hotel[] = response.data;
 
     return (
         <>
@@ -25,7 +26,7 @@ export default async function HotelPage() {
             </div>
             <div className="w-full flex flex-1 flex-col gap-4 p-4 pt-0">
                 <div className="grid auto-rows-min gap-4 md:grid-cols-2">
-                    {data.map((item, idx) => (
+                    {data.map((item: Hotel, idx: number) => (
                         <div key={`${idx}-h-new`}>
                             <HotelCard />
                         </div>
