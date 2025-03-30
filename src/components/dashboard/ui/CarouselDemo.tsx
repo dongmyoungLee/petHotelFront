@@ -2,7 +2,7 @@ import * as React from "react"
 
 import {Card, CardContent} from "@/components/ui/card"
 import {Carousel, CarouselContent, CarouselItem,} from "@/components/ui/carousel"
-import HotelCard from "@/components/dashboard/HotelCard";
+import HotelCard from "@/components/dashboard/ui/HotelCard";
 
 // max-w-sm
 export function CarouselDemo() {
