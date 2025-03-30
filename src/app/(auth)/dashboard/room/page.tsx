@@ -1,4 +1,4 @@
-import {CarouselDemo} from "@/components/dashboard/CarouselDemo";
+import {CarouselDemo} from "@/components/dashboard/ui/CarouselDemo";
 
 export default function RoomPage() {
     return (
