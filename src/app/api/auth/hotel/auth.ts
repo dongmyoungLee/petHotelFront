@@ -1,8 +1,7 @@
 import {apiClient} from "@/app/api/apiClientAxios";
 import {Hotel, HotelSignupRequest, HotelSignupResponse} from "@/types/auth/hotel/authType";
-import {AxiosError, AxiosResponse} from "axios";
-import {LoginRequest, LoginResponse, UserInfoTokenType} from "@/types/auth/user/authType";
-import {cookies} from "next/headers";
+import {AxiosResponse} from "axios";
+import {LoginRequest, UserInfoTokenType} from "@/types/auth/user/authType";
 
 export async function hotelLogin(request : LoginRequest): Promise<UserInfoTokenType> {
     await new Promise(resolve => setTimeout(resolve, 1000));
@@ -21,6 +20,7 @@ export async function hotelSignup(request : HotelSignupRequest): Promise<HotelSi
 }
 
 export async function getHotelByCompany(token: string|undefined): Promise<Hotel[]> {
+    await new Promise(resolve => setTimeout(resolve, 1000));
 
     const response: AxiosResponse = await apiClient.get<AxiosResponse>(`/api/v1/hotels/${token}`, {
         headers: {
