@@ -1,7 +1,6 @@
 import {Hotel} from "@/types/auth/hotel/authType";
 
-export default async function HotelCard({hotel} : Hotel) {
-    console.log(hotel)
+export default async function HotelCard({hotel} : { hotel: Hotel }) {
     return (
         <div className="w-full h-full shadow-sm rounded-xl flex flex-col">
             <div className="relative w-full aspect-video mb-4">
@@ -13,30 +12,30 @@ export default async function HotelCard({hotel} : Hotel) {
                 />
             </div>
             <div className="p-4">
-                <h2 className="text-xl font-semibold mb-2 text-[#8b74ff]">강아지 천국 호텔</h2>
+                <h2 className="text-xl font-semibold mb-2 text-[#8b74ff]">{hotel.hotelName}</h2>
 
                 <p className="text-gray-600 mb-1">
-                    <span className="font-semibold">주소:</span> 서울시 강남구 역삼동 123-45
+                    <span className="font-semibold">주소:</span> {hotel.hotelAddress}
                 </p>
 
                 <p className="text-gray-600 mb-1">
-                    <span className="font-semibold">연락처:</span> 02-123-4567
+                    <span className="font-semibold">연락처:</span> {hotel.hotelPhone}
                 </p>
 
                 <p className="text-gray-600 mb-1">
                     <span className="font-semibold">웹사이트:</span>{" "}
                     <a
-                        href="https://www.dogheavenhotel.com"
+                        href={hotel.hotelWebsite}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="text-blue-500"
                     >
-                        www.dogheavenhotel.com
+                        {hotel.hotelWebsite}
                     </a>
                 </p>
 
                 <p className="text-gray-600">
-                    <span className="font-semibold">대표자:</span> 김사장
+                    <span className="font-semibold">대표자:</span> {hotel.hotelOwnerName}
                 </p>
             </div>
         </div>

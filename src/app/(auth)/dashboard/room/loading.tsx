@@ -5,6 +5,10 @@ export default function Loading() {
             <div className="bg-[#f5f5f5]/80 aspect-video rounded-xl" />
             <div className="bg-[#f5f5f5]/80 aspect-video rounded-xl" />
             <div className="bg-[#f5f5f5]/80 aspect-video rounded-xl" />
+            <div className="bg-[#f5f5f5]/80 aspect-video rounded-xl" />
+            <div className="bg-[#f5f5f5]/80 aspect-video rounded-xl" />
+            <div className="bg-[#f5f5f5]/80 aspect-video rounded-xl" />
+            <div className="bg-[#f5f5f5]/80 aspect-video rounded-xl" />
         </div>
     );
 }
