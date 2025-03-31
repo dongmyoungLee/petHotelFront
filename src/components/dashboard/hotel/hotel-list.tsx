@@ -1,5 +1,5 @@
-import { getHotelByCompany } from "@/app/api/auth/hotel/auth";
-import { Hotel } from "@/types/auth/hotel/authType";
+import {getHotelByCompany} from "@/app/api/auth/hotel/auth";
+import {Hotel} from "@/types/auth/hotel/authType";
 import HotelCard from "@/components/dashboard/ui/HotelCard";
 
 async function HotelList({ token }: { token: string | undefined }) {

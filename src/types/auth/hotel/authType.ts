@@ -45,3 +45,15 @@ export interface Hotel {
     rooms: Room[];
     services: Service[];
 }
+
+export interface HotelRequest {
+    companyId: string | null;
+    hotelName: string;
+    hotelAddress: string;
+    hotelPhone: string;
+    hotelWebsite: string;
+    hotelOwnerName: string;
+    hotelProfileImg: string;
+    rooms: Room[];
+    services: Service[];
+}
