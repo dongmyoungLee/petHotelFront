@@ -19,7 +19,7 @@ export function CarouselDemo() {
                             <Card>
                                 <CardContent>
                                     <div className="grid auto-rows-min gap-4 grid-cols-1 md:grid-cols-1">
-                                        <HotelCard />
+                                        {/*<HotelCard />*/}
                                     </div>
                                 </CardContent>
                             </Card>

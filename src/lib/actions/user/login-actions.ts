@@ -22,7 +22,7 @@ export async function loginAction(prevState: any, formData: FormData) {
     try {
         loginResponse = await userLogin({ userEmail : userEmail, userPwd: userPwd });
     } catch (error) {
-        return {type: 'error', message: '로그인 정보가 올바르지 않습니다.'};
+        return {type: 'error', message: error instanceof Error ? error.message : '로그인 중 오류가 발생했습니다.' };
     }
 
     const cookieStore = await cookies();
