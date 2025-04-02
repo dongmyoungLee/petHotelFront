@@ -17,6 +17,7 @@ export async function hotelLoginAction(prevState: any, formData: FormData) {
 
     try {
         loginResponse = await hotelLogin({ userEmail : hotelEmail, userPwd: hotelPwd });
+        console.log(loginResponse)
     } catch (error) {
         return {type: 'error', message: '로그인 정보가 올바르지 않습니다.'};
     }

@@ -48,6 +48,7 @@ export async function getHotelByCompany(token: string | undefined): Promise<Hote
         headers: {
             Authorization: `Bearer ${token}`,
         },
+        cache: "force-cache"
     });
 }
 
