@@ -19,10 +19,12 @@ import {useStore} from "@/hooks/useStore";
 import {useAdminInfo} from "@/hooks/useUserInfo";
 import {Hotel, HotelRequest} from "@/types/auth/hotel/authType";
 import {HotelAddAction} from "@/lib/actions/hotel/hotel-add-action";
+import {AlertDialogDemo} from "@/components/common/AlertDialogDemo";
 
 export function SheetForm({ data }: { data: Dialog }) {
     const [open, setOpen] = useState(false);
     const [formData, setFormData] = useState<{ [key: string]: string }>({});
+    const [confirmOpen, setConfirmOpen] = useState(false);
 
     const adminInfo:UserInfo|undefined = useStore(useAdminInfo, (state) => {
         return state.adminInfo;
@@ -47,12 +49,13 @@ export function SheetForm({ data }: { data: Dialog }) {
 
         try {
             const res: Hotel = await HotelAddAction(request, data.token);
-            console.log(res);
+            setOpen(false);
         } catch (err) {
             console.log(err);
         }
 
-        setOpen(false);
+
+
     }
 
     function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
@@ -85,10 +88,22 @@ export function SheetForm({ data }: { data: Dialog }) {
                         ))}
                     </div>
                     <SheetFooter>
-                        <Button className="text-gray-100 cursor-pointer" type="submit">저장</Button>
+                        <Button className="text-gray-100 cursor-pointer" type="button" onClick={() => setConfirmOpen(true)}>저장</Button>
+
+                        {/* modal area ..*/}
+                        <div className="hidden">
+                            <AlertDialogDemo
+                                open={confirmOpen}
+                                onOpenChange={setConfirmOpen}
+                                onConfirm={handleSubmit}
+                                alertMsg="정말 추가 하시겠습니까 ?"
+                                alertContentMsg="입력하신 호텔이 추가 됩니다."
+                            />
+                        </div>
                     </SheetFooter>
                 </form>
             </SheetContent>
+
         </Sheet>
     )
 }

@@ -10,10 +10,11 @@ export async function fetchData<T>(url: string, options?: RequestInit): Promise<
             'Content-Type': 'application/json',
             ...(options?.headers || {}),
         },
-        cache: "force-cache"
     });
 
     const text: string = await response.text();
+
+    console.log(response)
 
     //  응답이 JSON인 경우에만 JSON으로 파싱
     if (response.ok) {
