@@ -8,6 +8,7 @@ import {getAccessToken} from "@/lib/utils/cookieUtils";
 export default async function HotelPage() {
     const token: string|undefined = await getAccessToken();
 
+    // test ->
     const dialogData: Dialog = {
         title : '호텔 추가',
         key: 'hotel',
