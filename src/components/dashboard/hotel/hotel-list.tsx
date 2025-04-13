@@ -15,11 +15,14 @@ async function HotelList({ token }: { token: string | undefined }) {
 
     return (
         <div className="grid auto-rows-min gap-4 md:grid-cols-2">
-            {data.map((item: Hotel, idx: number) => (
-                <div key={`${idx}-h-new`}>
-                    <HotelCard hotel={item} />
-                </div>
-            ))}
+            {data.length > 0 &&
+                data.map((item: Hotel, idx: number) => (
+                        <div key={`${idx}-h-new`}>
+                            <HotelCard hotel={item} />
+                        </div>
+                ))
+            }
+            {data.length < 1 && <p className="p-4">등록하신 호텔이 없습니다.</p>}
         </div>
     );
 }

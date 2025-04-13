@@ -28,7 +28,6 @@ export default async function HotelPage() {
                     <HotelList token={token}/>
                 </Suspense>
             </div>
-
         </>
     );
 }
