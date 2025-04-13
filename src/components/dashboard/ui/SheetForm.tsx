@@ -53,9 +53,6 @@ export function SheetForm({ data }: { data: Dialog }) {
         } catch (err) {
             console.log(err);
         }
-
-
-
     }
 
     function handleChange(event: React.ChangeEvent<HTMLInputElement>) {

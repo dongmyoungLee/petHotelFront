@@ -26,7 +26,7 @@ export default function HotelLoginHome() {
             if (state.type === "success") {
                 setAdminInfo(state.adminInfo);
                 setTimeout(() => {
-                    router.push('/');
+                    router.push('/dashboard/hotel');
                 }, 500);
             }
 

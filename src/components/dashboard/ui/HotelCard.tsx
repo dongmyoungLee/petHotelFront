@@ -1,6 +1,19 @@
 import {Hotel} from "@/types/auth/hotel/authType";
+import {HotelEditDialog} from "@/components/common/HotelEditDialog";
+import {Dialog} from "@/types/auth/common/authType";
 
 export default async function HotelCard({hotel} : { hotel: Hotel }) {
+
+    const dialogData: Dialog = {
+        title : '수정',
+        key: 'hotel',
+        description: '수정 하실 호텔의 정보를 입력 해주세요.',
+        contents : ['hotelName', 'hotelAddress', 'hotelPhone', 'hotelWebsite','hotelProfileImg','hotelOwnerName'],
+        korContent: ['업체명', '주소', '연락처', '사이트', '사진', '대표자'],
+        token: '',
+    }
+
+
     return (
         <div className="w-full h-full shadow-sm rounded-xl flex flex-col">
             <div className="relative w-full aspect-video mb-4">
@@ -12,8 +25,10 @@ export default async function HotelCard({hotel} : { hotel: Hotel }) {
                 />
             </div>
             <div className="p-4">
-                <h2 className="text-xl font-semibold mb-2 text-[#8b74ff]">{hotel.hotelName}</h2>
-
+                <div className="flex justify-between">
+                    <h2 className="text-xl font-semibold mb-2 text-[#8b74ff]">{hotel.hotelName}</h2>
+                    <HotelEditDialog data={dialogData} hotel={hotel} />
+                </div>
                 <p className="text-gray-600 mb-1">
                     <span className="font-semibold">주소:</span> {hotel.hotelAddress}
                 </p>
