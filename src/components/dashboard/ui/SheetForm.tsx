@@ -20,17 +20,17 @@ import {useAdminInfo} from "@/hooks/useUserInfo";
 import {Hotel, HotelRequest} from "@/types/auth/hotel/authType";
 import {HotelAddAction} from "@/lib/actions/hotel/hotel-add-action";
 import {AlertDialogDemo} from "@/components/common/AlertDialogDemo";
+import {useToast} from "@/hooks/useToast";
 
 export function SheetForm({ data }: { data: Dialog }) {
     const [open, setOpen] = useState(false);
     const [formData, setFormData] = useState<{ [key: string]: string }>({});
     const [confirmOpen, setConfirmOpen] = useState(false);
+    const { addToast } = useToast();
 
     const adminInfo:UserInfo|undefined = useStore(useAdminInfo, (state) => {
         return state.adminInfo;
     });
-
-
 
     async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
@@ -47,10 +47,25 @@ export function SheetForm({ data }: { data: Dialog }) {
             services: [],
         }
 
+        if (
+            !adminInfo?.id ||
+            !formData.hotelName ||
+            !formData.hotelAddress ||
+            !formData.hotelPhone ||
+            !formData.hotelWebsite ||
+            !formData.hotelOwnerName ||
+            !formData.hotelProfileImg
+        ) {
+            addToast({message : "모든 데이터를 입력해 주세요.", type : "error"});
+            return;
+        }
+
         try {
             const res: Hotel = await HotelAddAction(request, data.token);
             setOpen(false);
+            addToast({message : "호텔이 생성 되었습니다.", type : "success"});
         } catch (err) {
+            addToast({message : err, type : "error"});
             console.log(err);
         }
     }
@@ -61,6 +76,8 @@ export function SheetForm({ data }: { data: Dialog }) {
             [event.target.id]: event.target.value
         }));
     }
+
+
     return (
         <Sheet open={open} onOpenChange={setOpen}>
             <SheetTrigger asChild>
@@ -93,8 +110,8 @@ export function SheetForm({ data }: { data: Dialog }) {
                                 open={confirmOpen}
                                 onOpenChange={setConfirmOpen}
                                 onConfirm={handleSubmit}
-                                alertMsg="정말 추가 하시겠습니까 ?"
-                                alertContentMsg="입력하신 호텔이 추가 됩니다."
+                                alertMsg="호텔을 생성 하시겠습니까 ?"
+                                alertContentMsg="입력하신 호텔이 생성 됩니다."
                             />
                         </div>
                     </SheetFooter>

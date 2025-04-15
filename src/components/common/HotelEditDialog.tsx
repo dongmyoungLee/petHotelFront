@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import {Button} from "@/components/ui/button"
 import {
@@ -18,12 +18,12 @@ import {DialogType} from "@/types/auth/common/authType";
 import {AlertDialogDemo} from "@/components/common/AlertDialogDemo";
 
 export function HotelEditDialog({ data, hotel }: { data: DialogType, hotel: Hotel }) {
-    const [open, setOpen] = useState(false);
+    const [open, setOpen] = useState<boolean>(false);
     const [formData, setFormData] = useState<{ [key: string]: string }>({});
-    const [confirmOpen, setConfirmOpen] = useState(false);
-    const [popupAlertText, setPopupAlertText] = useState('');
-    const [popupText, setPopupText] = useState('');
-    const [popupType, setPopupType] = useState(0);
+    const [confirmOpen, setConfirmOpen] = useState<boolean>(false);
+    const [popupAlertText, setPopupAlertText] = useState<string>('');
+    const [popupText, setPopupText] = useState<string>('');
+    const [popupType, setPopupType] = useState<number>(0);
 
     useEffect(() => {
         const initialFormData = data.contents.reduce((acc:any, item: string) => {
@@ -42,7 +42,7 @@ export function HotelEditDialog({ data, hotel }: { data: DialogType, hotel: Hote
 
     async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
-        console.log(popupType)
+        console.log(hotel.hotelId)
     }
 
     function confirmPopupSendData(type: number) {

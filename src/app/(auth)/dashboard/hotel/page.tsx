@@ -10,7 +10,7 @@ export default async function HotelPage() {
 
     // test ->
     const dialogData: Dialog = {
-        title : '호텔 추가',
+        title : '호텔 생성',
         key: 'hotel',
         description: '입점 하실 호텔의 정보를 입력 해주세요.',
         contents : ['hotelName', 'hotelAddress', 'hotelPhone', 'hotelWebsite','hotelProfileImg','hotelOwnerName'],

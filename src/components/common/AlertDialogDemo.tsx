@@ -1,3 +1,5 @@
+'use client';
+
 import {
     AlertDialog,
     AlertDialogAction,
@@ -18,6 +20,8 @@ interface AlertDialogProps {
     alertMsg: string,
     alertContentMsg: string,
 }
+
+
 
 export function AlertDialogDemo({ open, onOpenChange, onConfirm, alertMsg, alertContentMsg }: AlertDialogProps) {
     return (
