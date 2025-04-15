@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import {Button} from "@/components/ui/button"
 import {
@@ -14,19 +14,20 @@ import {Input} from "@/components/ui/input"
 import {Label} from "@/components/ui/label"
 import {useEffect, useState} from "react";
 import {Hotel} from "@/types/auth/hotel/authType";
+import {DialogType} from "@/types/auth/common/authType";
 import {AlertDialogDemo} from "@/components/common/AlertDialogDemo";
 
-export function HotelEditDialog({ data, hotel }: { data: Dialog, hotel: Hotel }) {
-    const [open, setOpen] = useState(false);
+export function HotelEditDialog({ data, hotel }: { data: DialogType, hotel: Hotel }) {
+    const [open, setOpen] = useState<boolean>(false);
     const [formData, setFormData] = useState<{ [key: string]: string }>({});
-    const [confirmOpen, setConfirmOpen] = useState(false);
-    const [popupAlertText, setPopupAlertText] = useState('');
-    const [popupText, setPopupText] = useState('');
-    const [popupType, setPopupType] = useState(0);
+    const [confirmOpen, setConfirmOpen] = useState<boolean>(false);
+    const [popupAlertText, setPopupAlertText] = useState<string>('');
+    const [popupText, setPopupText] = useState<string>('');
+    const [popupType, setPopupType] = useState<number>(0);
 
     useEffect(() => {
-        const initialFormData = data.contents.reduce((acc, item) => {
-            acc[item] = hotel[item] ?? '';
+        const initialFormData = data.contents.reduce((acc:any, item: string) => {
+            acc[item] = (hotel as Record<string, any>)[item] ?? '';
             return acc;
         }, {} as { [key: string]: string });
         setFormData(initialFormData);
@@ -41,7 +42,7 @@ export function HotelEditDialog({ data, hotel }: { data: Dialog, hotel: Hotel })
 
     async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
-        console.log(popupType)
+        console.log(hotel.hotelId)
     }
 
     function confirmPopupSendData(type: number) {
@@ -83,8 +84,8 @@ export function HotelEditDialog({ data, hotel }: { data: Dialog, hotel: Hotel })
                     </div>
                 </form>
                 <DialogFooter className="p-4 pt-0 pb-0">
-                    <Button onClick={() => confirmPopupSendData(0)} type="submit">삭제</Button>
-                    <Button onClick={() => confirmPopupSendData(1)} type="submit">저장</Button>
+                    <Button className="cursor-pointer" onClick={() => confirmPopupSendData(0)} type="submit">삭제</Button>
+                    <Button className="cursor-pointer" onClick={() => confirmPopupSendData(1)} type="submit">저장</Button>
 
                     {/* modal area ..*/}
                     <div className="hidden">
