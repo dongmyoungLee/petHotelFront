@@ -7,3 +7,12 @@ export interface Dialog {
     korContent: string[];
     token: string|undefined;
 }
+
+export interface DialogType {
+    title: string;
+    key: string;
+    description: string;
+    contents: string[];
+    korContent: string[];
+    token: string|undefined;
+}

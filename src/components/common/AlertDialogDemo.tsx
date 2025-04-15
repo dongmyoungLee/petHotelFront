@@ -14,7 +14,7 @@ import { Button } from "@/components/ui/button"
 interface AlertDialogProps {
     open: boolean;
     onOpenChange: (open: boolean) => void;
-    onConfirm: () => void;
+    onConfirm: any
     alertMsg: string,
     alertContentMsg: string,
 }
