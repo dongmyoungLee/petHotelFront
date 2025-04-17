@@ -1,4 +1,11 @@
-import {Hotel, HotelRequest, HotelSignupRequest, HotelSignupResponse} from "@/types/auth/hotel/authType";
+import {
+    ApiCommonResponse,
+    Hotel,
+    HotelRequest,
+    HotelSignupRequest,
+    HotelSignupResponse,
+    HotelUpdateRequest
+} from "@/types/auth/hotel/authType";
 import {LoginRequest, UserInfoTokenType} from "@/types/auth/user/authType";
 import {fetchData} from "@/app/api/apiClient";
 
@@ -55,6 +62,16 @@ export async function getHotelByCompany(token: string | undefined): Promise<Hote
 export async function createHotel(request: HotelRequest, token: string | undefined): Promise<Hotel> {
     return fetchData<Hotel>('/api/v1/hotels', {
         method: 'POST',
+        body: JSON.stringify(request),
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    });
+}
+
+export async function updateHotel(request: HotelUpdateRequest, token: string | undefined): Promise<ApiCommonResponse> {
+    return fetchData<ApiCommonResponse>('/api/v1/hotels', {
+        method: 'PUT',
         body: JSON.stringify(request),
         headers: {
             Authorization: `Bearer ${token}`,

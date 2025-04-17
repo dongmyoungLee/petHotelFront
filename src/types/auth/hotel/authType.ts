@@ -57,3 +57,19 @@ export interface HotelRequest {
     rooms: Room[];
     services: Service[];
 }
+
+export interface HotelUpdateRequest {
+    hotelId: string;
+    companyId: string;
+    hotelName: string;
+    hotelAddress: string;
+    hotelPhone: string;
+    hotelWebsite: string;
+    hotelOwnerName: string;
+    hotelProfileImg: string;
+}
+
+export interface ApiCommonResponse {
+    statusCode: number;
+    msg: string;
+}

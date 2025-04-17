@@ -13,9 +13,11 @@ import {
 import {Input} from "@/components/ui/input"
 import {Label} from "@/components/ui/label"
 import {useEffect, useState} from "react";
-import {Hotel} from "@/types/auth/hotel/authType";
+import {ApiCommonResponse, Hotel, HotelUpdateRequest} from "@/types/auth/hotel/authType";
 import {DialogType} from "@/types/auth/common/authType";
 import {AlertDialogDemo} from "@/components/common/AlertDialogDemo";
+import {HotelUpdateAction} from "@/lib/actions/hotel/hotel-update-action";
+import {useToast} from "@/hooks/useToast";
 
 export function HotelEditDialog({ data, hotel }: { data: DialogType, hotel: Hotel }) {
     const [open, setOpen] = useState<boolean>(false);
@@ -24,6 +26,7 @@ export function HotelEditDialog({ data, hotel }: { data: DialogType, hotel: Hote
     const [popupAlertText, setPopupAlertText] = useState<string>('');
     const [popupText, setPopupText] = useState<string>('');
     const [popupType, setPopupType] = useState<number>(0);
+    const { addToast } = useToast();
 
     useEffect(() => {
         const initialFormData = data.contents.reduce((acc:any, item: string) => {
@@ -42,7 +45,25 @@ export function HotelEditDialog({ data, hotel }: { data: DialogType, hotel: Hote
 
     async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
-        console.log(hotel.hotelId)
+
+        const request: HotelUpdateRequest = {
+            hotelId: hotel.hotelId,
+            companyId: hotel.companyId,
+            hotelName: formData.hotelName,
+            hotelAddress: formData.hotelAddress,
+            hotelPhone: formData.hotelPhone,
+            hotelWebsite: formData.hotelWebsite,
+            hotelOwnerName: formData.hotelOwnerName,
+            hotelProfileImg: formData.hotelProfileImg
+        }
+
+        const res: ApiCommonResponse = await HotelUpdateAction(request, data.token);
+
+        if (res.statusCode === 'OK') {
+            setOpen(false);
+            addToast({message : "호텔이 수정 되었습니다.", type : "success"});
+        }
+        console.log(res);
     }
 
     function confirmPopupSendData(type: number) {
@@ -57,6 +78,10 @@ export function HotelEditDialog({ data, hotel }: { data: DialogType, hotel: Hote
             setPopupText('수정 하시겠습니까 ?');
             setPopupAlertText('호텔 정보가 수정 됩니다.');
         }
+    }
+
+    function testes() {
+        debugger
     }
 
     return (
