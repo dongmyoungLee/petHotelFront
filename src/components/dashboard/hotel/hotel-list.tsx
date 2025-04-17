@@ -18,7 +18,7 @@ async function HotelList({ token }: { token: string | undefined }) {
             {data.length > 0 &&
                 data.map((item: Hotel, idx: number) => (
                         <div key={`${idx}-h-new`}>
-                            <HotelCard hotel={item} />
+                            <HotelCard hotel={item} token={token} />
                         </div>
                 ))
             }

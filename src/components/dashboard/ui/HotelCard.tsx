@@ -2,7 +2,7 @@ import {Hotel} from "@/types/auth/hotel/authType";
 import {HotelEditDialog} from "@/components/common/HotelEditDialog";
 import {Dialog} from "@/types/auth/common/authType";
 
-export default async function HotelCard({hotel} : { hotel: Hotel }) {
+export default async function HotelCard({hotel, token} : { hotel: Hotel, token: string | undefined }) {
 
     const dialogData: Dialog = {
         title : '수정',
@@ -10,7 +10,7 @@ export default async function HotelCard({hotel} : { hotel: Hotel }) {
         description: '수정 하실 호텔의 정보를 입력 해주세요.',
         contents : ['hotelName', 'hotelAddress', 'hotelPhone', 'hotelWebsite','hotelProfileImg','hotelOwnerName'],
         korContent: ['업체명', '주소', '연락처', '사이트', '사진', '대표자'],
-        token: '',
+        token: token,
     }
 
 
